@@ -2,6 +2,7 @@
 source ../deploy-envs.sh
 
 export AWS_ECS_REPO_DOMAIN=$AWS_ACCOUNT_NUMBER.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
+export AWS_ECS_REPO_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
 export ECS_SERVICE=$IMAGE_NAME-service
 export ECS_TASK=$IMAGE_NAME-task
 
@@ -14,7 +15,7 @@ export PATH=$PATH:$HOME/.local/bin # put aws in the path
 # replace environment variables in task-definition
 envsubst < task-definition.json > new-task-definition.json
 
-eval $(docker login -u AWS -p 3O2HsQ3Tc1nj7+rfMBjU1R+zmyUryxpBMV8AzGTv -e none 985533458274.dkr.ecr.us-east-2.amazonaws.com) #needs AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY envvars
+docker login -u AWS -p $AWS_ECS_REPO_ACCESS_KEY -e none $AWS_ECS_REPO_DOMAIN  #needs AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY envvars
 
 if [ $(aws ecr describe-repositories | jq --arg x $IMAGE_NAME '[.repositories[] | .repositoryName == $x] | any') == "true" ]; then
     echo "Found ECS Repository $IMAGE_NAME"
