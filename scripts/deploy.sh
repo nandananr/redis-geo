@@ -2,7 +2,6 @@
 source ../deploy-envs.sh
 
 export AWS_ECS_REPO_DOMAIN=$AWS_ACCOUNT_NUMBER.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
-export AWS_SECRET_KEY=$AWS_SECRET_ACCESS_KEY
 export ECS_SERVICE=$IMAGE_NAME-service
 export ECS_TASK=$IMAGE_NAME-task
 
@@ -16,7 +15,6 @@ export PATH=$PATH:$HOME/.local/bin # put aws in the path
 envsubst < task-definition.json > new-task-definition.json
 
 aws_login=$(aws ecr get-login --region $AWS_DEFAULT_REGION) #needs AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY envvars
-print(aws_login)
 eval $(aws_login.replace("https://",""))
 
 #docker login -u AWS -p <password> -e none <aws_account_id>.dkr.ecr.<region>.amazonaws.com
