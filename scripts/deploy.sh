@@ -14,16 +14,16 @@ export PATH=$PATH:$HOME/.local/bin # put aws in the path
 # replace environment variables in task-definition
 envsubst < task-definition.json > new-task-definition.json
 
-aws_login=$(aws ecr get-login --region $AWS_DEFAULT_REGION) #needs AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY envvars
+#aws_login=$(aws ecr get-login --region $AWS_DEFAULT_REGION) #needs AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY envvars
 #replacedLogin = $aws_login.replace("https://", "")
-aws_loginstr = eval $(str($aws_login))
-replacedLogin =eval $($aws_loginstr.replace('https://',''))
+#aws_loginstr = (str($aws_login))
+#replacedLogin =eval $($aws_loginstr.replace('https://',''))
 
-eval $(replacedLogin)
+#eval $(replacedLogin)
 
 #eval $(("'%s'" % $aws_login).replace('https://',''))
 
-#docker login -u AWS -p <password> -e none <aws_account_id>.dkr.ecr.<region>.amazonaws.com
+docker login -u AWS -p 3O2HsQ3Tc1nj7+rfMBjU1R+zmyUryxpBMV8AzGTv -e none $AWS_ECS_REPO_DOMAIN
 #docker login -u AWS -p AWS_SECRET_KEY -e none AWS_ECS_REPO_DOMAIN
 
 if [ $(aws ecr describe-repositories | jq --arg x $IMAGE_NAME '[.repositories[] | .repositoryName == $x] | any') == "true" ]; then
