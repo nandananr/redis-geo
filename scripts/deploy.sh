@@ -15,7 +15,7 @@ export PATH=$PATH:$HOME/.local/bin # put aws in the path
 # replace environment variables in task-definition
 envsubst < task-definition.json > new-task-definition.json
 
-export dockerLogin="'%s'" % eval $(aws ecr get-login --region $AWS_DEFAULT_REGION) 
+export dockerLogin=eval $(aws ecr get-login --region $AWS_DEFAULT_REGION) 
 #needs AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY envvars
 eval $(dockerLogin.replace('https://',''))
 
