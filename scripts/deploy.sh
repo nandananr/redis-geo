@@ -15,7 +15,7 @@ export PATH=$PATH:$HOME/.local/bin # put aws in the path
 envsubst < task-definition.json > new-task-definition.json
 
 aws_login=$(aws ecr get-login --region $AWS_DEFAULT_REGION) #needs AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY envvars
-replacedLogin = $(aws_login.replace("https://", ""))
+replacedLogin = $aws_login.replace("https://", "")
 
 eval $(replacedLogin)
 
