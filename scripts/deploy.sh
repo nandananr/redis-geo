@@ -15,12 +15,12 @@ export PATH=$PATH:$HOME/.local/bin # put aws in the path
 # replace environment variables in task-definition
 envsubst < task-definition.json > new-task-definition.json
 
-#dockerLogin =  "'%s'" % aws ecr get-login --region $AWS_DEFAULT_REGION 
+export dockerLogin="'%s'" % eval $(aws ecr get-login --region $AWS_DEFAULT_REGION) 
 #needs AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY envvars
-#eval $(dockerLogin.replace("https://",""))
-#docker login -u AWS -p <password> -e none <aws_account_id>.dkr.ecr.<region>.amazonaws.com
+eval $(dockerLogin.replace('https://',''))
 
-docker login -u AWS -p AWS_SECRET_KEY -e none AWS_ECS_REPO_DOMAIN
+#docker login -u AWS -p <password> -e none <aws_account_id>.dkr.ecr.<region>.amazonaws.com
+#docker login -u AWS -p AWS_SECRET_KEY -e none AWS_ECS_REPO_DOMAIN
 
 if [ $(aws ecr describe-repositories | jq --arg x $IMAGE_NAME '[.repositories[] | .repositoryName == $x] | any') == "true" ]; then
     echo "Found ECS Repository $IMAGE_NAME"
