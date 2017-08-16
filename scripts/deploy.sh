@@ -16,18 +16,6 @@ envsubst < task-definition.json > new-task-definition.json
 
 eval $(aws ecr get-login --region $AWS_DEFAULT_REGION) #needs AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY envvars
 
-#aws_login=$(aws ecr get-login --region $AWS_DEFAULT_REGION) #needs AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY envvars
-#replacedLogin = $aws_login.replace("https://", "")
-#aws_loginstr = (str($aws_login))
-#replacedLogin =eval $($aws_loginstr.replace('https://',''))
-
-#eval $(replacedLogin)
-
-#eval $(("'%s'" % $aws_login).replace('https://',''))
-
-#docker login -u AWS -p 3O2HsQ3Tc1nj7+rfMBjU1R+zmyUryxpBMV8AzGTv -e none $AWS_ECS_REPO_DOMAIN
-#docker login -u AWS -p AWS_SECRET_KEY -e none AWS_ECS_REPO_DOMAIN
-
 if [ $(aws ecr describe-repositories | jq --arg x $IMAGE_NAME '[.repositories[] | .repositoryName == $x] | any') == "true" ]; then
     echo "Found ECS Repository $IMAGE_NAME"
 else
