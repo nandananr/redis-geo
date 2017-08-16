@@ -6,7 +6,7 @@
     <AssemblyName>RedisGeo</AssemblyName>
     <OutputType>Exe</OutputType>
     <PackageId>RedisGeo</PackageId>
-    <RuntimeFrameworkVersion>1.1.1</RuntimeFrameworkVersion>
+    <RuntimeFrameworkVersion>1.0.0</RuntimeFrameworkVersion>
     <PackageTargetFallback>$(PackageTargetFallback);dotnet5.6;portable-net45+win8</PackageTargetFallback>
   </PropertyGroup>
 
